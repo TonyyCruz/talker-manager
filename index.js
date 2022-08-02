@@ -15,6 +15,8 @@ app.get('/', (_request, response) => {
 
 app.get('/talker', middleware.getTalkers);
 
+app.get('/talker/:id', middleware.getTalkerId);
+
 app.listen(PORT, () => {
   console.log(`Online, PORT: ${PORT}`);
 });

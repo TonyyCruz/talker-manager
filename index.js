@@ -1,7 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const talkerMiddleware = require('./middlewares/talkerMiddleware');
-const loginMiddleware = require('./middlewares/loginMiddleware');
+const talkerMiddleware = require('./middlewares/getTalker');
+const loginMiddleware = require('./middlewares/postLogin');
 
 const app = express();
 app.use(bodyParser.json());

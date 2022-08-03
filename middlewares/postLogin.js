@@ -1,3 +1,5 @@
+const regexEmail = /^[\w-.]+@([\w-]+\.)+[\w-]{3}$/g;
+
 const emailIsRequired = 'O campo "email" é obrigatório';
 const invalidEmailFormat = 'O "email" deve ter o formato "email@email.com"';
 const passwordIsRequired = 'O campo "password" é obrigatório';
@@ -10,7 +12,6 @@ const randomToken = () => {
 };
 
 const validateEmail = (email) => {
-  const regexEmail = /^[\w-.]+@([\w-]+\.)+[\w-]{3}$/g;
   const extraValidation = email.includes('.com');
   if (regexEmail.test(email) && extraValidation) return true;
   return false;

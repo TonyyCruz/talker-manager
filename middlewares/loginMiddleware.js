@@ -1,5 +1,5 @@
 const emailIsRequired = 'O campo "email" é obrigatório';
-const invalidEmailFormat = 'O campo "email" deve ter o formato "email@email.com"';
+const invalidEmailFormat = 'O "email" deve ter o formato "email@email.com"';
 const passwordIsRequired = 'O campo "password" é obrigatório';
 const invalidPassLength = 'O "password" deve ter pelo menos 6 caracteres';
 

@@ -28,9 +28,9 @@ const getTalkerId = async (req, res, next) => {
 
   try {
     const jsonTalkers = await catchJsonFile('talker.json');
-    const selectedPerson = jsonTalkers.filter((p) => p.id === Number(id));
+    const selectedPerson = jsonTalkers.find((p) => p.id === Number(id));
 
-    if (selectedPerson.length === 0) {
+    if (!selectedPerson) {
       return res.status(404).json({ message: 'Pessoa palestrante não encontrada' });
     }
 

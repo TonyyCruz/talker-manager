@@ -10,8 +10,9 @@ const randomToken = () => {
 };
 
 const validateEmail = (email) => {
-  const regexEmail = /^\w+(\[\+\.-\]?\w)*@\w+(\[\.-\]?\w+)*\.[a-z]+$/i;
-  if (regexEmail.test(email)) return true;
+  const regexEmail = /^[\w-.]+@([\w-]+\.)+[\w-]{3}$/g;
+  const extraValidation = email.includes('.com');
+  if (regexEmail.test(email) && extraValidation) return true;
   return false;
 };
 

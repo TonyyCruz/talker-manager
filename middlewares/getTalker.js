@@ -1,18 +1,8 @@
-const fs = require('fs/promises');
-
-const catchJsonFile = async (file) => {
-  try {
-    const talkers = await fs.readFile(file, 'utf-8');
-    if (talkers.length === 0 || talkers === '') return [];
-    return JSON.parse(talkers);
-  } catch (err) {
-      throw new Error(err);
-    }
-};
+const findJsonFile = require('../services/findJsonFile');
 
 const getTalkers = async (_req, res, next) => {
   try {
-    const jsonTalkers = await catchJsonFile('talker.json');
+    const jsonTalkers = await findJsonFile('talker.json');
         if (jsonTalkers.length === 0) {
       return res.status(200).json([]);
     }
@@ -27,7 +17,7 @@ const getTalkerId = async (req, res, next) => {
   const { id } = req.params;
 
   try {
-    const jsonTalkers = await catchJsonFile('talker.json');
+    const jsonTalkers = await findJsonFile('talker.json');
     const selectedPerson = jsonTalkers.find((p) => p.id === Number(id));
 
     if (!selectedPerson) {

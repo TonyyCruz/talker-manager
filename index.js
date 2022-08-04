@@ -6,6 +6,7 @@ const { postTalkerTest } = require('./middlewares/talkerTest');
 const insertAndEditeTalker = require('./services/insert&EditTalker');
 const { tokenValidation } = require('./middlewares/tokenValidation');
 const { deleteTalker } = require('./middlewares/deleteTalker');
+const { queryTalker } = require('./middlewares/queryTalker');
 
 const app = express();
 app.use(bodyParser.json());
@@ -19,6 +20,8 @@ app.get('/', (_request, response) => {
 });
 
 app.get('/talker', getTalkers);
+
+app.get('/talker/search', tokenValidation, queryTalker);
 
 app.get('/talker/:id', getTalkerId);
 
@@ -50,6 +53,14 @@ app.put('/talker/:id', postTalkerTest, async (req, res, next) => {
 
 app.delete('/talker/:id', deleteTalker, (_req, res) => {
   res.status(204).json();
+});
+
+app.all('*', (req, res) => {
+  res.status(404).json({ message: `A rota ${req.path} não existe.` });
+});
+
+app.use((err, _req, res, _next) => {
+  res.status(500).json({ message: err.message });
 });
 
 app.listen(PORT, () => {

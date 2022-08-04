@@ -28,12 +28,12 @@ const editeJsonFile = async (name, age, talk, id) => {
   const talkerIdx = fileData.findIndex((t) => t.id === Number(id));
   if (talkerIdx < 0) return false;
   fileData.splice(talkerIdx, 1, newTalkerObj);
-  console.log('editeJsonFile', fileData);
   fs.writeFile(talkerFile, JSON.stringify(fileData, null, 2));
   return newTalkerObj;
 };
 
-const insertJsonFile = async ({ name, age, talk, id }) => {
+// ==== CASO RECEBA UM ID IRA EDITAR, SE NÃO REFEBER O ID IRA ADICIONAR ==== //
+const insertAndEditeTalker = async ({ name, age, talk, id }) => {
   if (id) return editeJsonFile(name, age, talk, id);
 
   const fileData = await catchJsonFile(talkerFile);
@@ -49,4 +49,4 @@ const insertJsonFile = async ({ name, age, talk, id }) => {
   }
 };
 
-module.exports = insertJsonFile;
+module.exports = insertAndEditeTalker;

@@ -49,4 +49,6 @@ const insertAndEditeTalker = async ({ name, age, talk, id }) => {
   }
 };
 
-module.exports = insertAndEditeTalker;
+module.exports = {
+  insertAndEditeTalker,
+};

@@ -1,12 +1,15 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const { getTalkers, getTalkerId } = require('./middlewares/getTalker');
-const { loginVerify } = require('./middlewares/postLogin');
-const { postTalkerTest } = require('./middlewares/talkerTest');
-const insertAndEditeTalker = require('./services/insert&EditTalker');
-const { tokenValidation } = require('./middlewares/tokenValidation');
-const { deleteTalker } = require('./middlewares/deleteTalker');
-const { queryTalker } = require('./middlewares/queryTalker');
+const { insertAndEditeTalker } = require('./services/insert&EditTalker');
+const {
+  getTalkers,
+  getTalkerId,
+  loginVerify,
+  talkerValidation,
+  tokenValidation,
+  deleteTalker,
+  queryTalker,
+} = require('./middlewares');
 
 const app = express();
 app.use(bodyParser.json());
@@ -29,7 +32,7 @@ app.post('/login', loginVerify);
 
 app.use(tokenValidation);
 
-app.post('/talker', postTalkerTest, async (req, res, next) => {
+app.post('/talker', talkerValidation, async (req, res, next) => {
   const { name, age, talk } = req.body;
   try {
     const newTalker = await insertAndEditeTalker({ name, age, talk });
@@ -39,7 +42,7 @@ app.post('/talker', postTalkerTest, async (req, res, next) => {
   }
 });
 
-app.put('/talker/:id', postTalkerTest, async (req, res, next) => {
+app.put('/talker/:id', talkerValidation, async (req, res, next) => {
   const { id } = req.params;
   const { name, age, talk } = req.body;
   try {

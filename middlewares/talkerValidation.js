@@ -1,5 +1,3 @@
-// const insertJsonFile = require('../services/insertJsonFile');
-
 const regexData = /^([0-2][0-9]|(3)[0-1])(\/)(((0)[0-9])|((1)[0-2]))(\/)\d{4}$/i;
 
 const nameIsRequired = 'O campo "name" é obrigatório';
@@ -45,7 +43,7 @@ const talkVerify = (talk) => {
   return { fail: false };
 };
 
-const postTalkerTest = async (req, res, next) => {
+const talkerValidation = async (req, res, next) => {
   const { name, age, talk } = req.body;
 
   const nameAndAge = nameAndAgeVerify(name, age);
@@ -58,5 +56,5 @@ const postTalkerTest = async (req, res, next) => {
 };
 
 module.exports = {
-  postTalkerTest,
+  talkerValidation,
 };

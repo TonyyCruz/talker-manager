@@ -2,6 +2,8 @@ const insertJsonFile = require('../services/insertJsonFile');
 
 const regexData = /^([0-2][0-9]|(3)[0-1])(\/)(((0)[0-9])|((1)[0-2]))(\/)\d{4}$/i;
 
+const tokenIsRequired = 'Token não encontrado';
+const tokenInvalid = 'Token inválido';
 const nameIsRequired = 'O campo "name" é obrigatório';
 const nameInvalid = 'O "name" deve ter pelo menos 3 caracteres';
 const ageIsRequired = '"O campo "age" é obrigatório';
@@ -11,6 +13,12 @@ const watchedAtIsRequired = 'O campo "watchedAt" é obrigatório';
 const invalidDate = 'O campo "watchedAt" deve ter o formato "dd/mm/aaaa"';
 const rateIsRequired = 'O campo "rate" é obrigatório';
 const invalidRate = 'O campo "rate" deve ser um inteiro de 1 à 5';
+
+const verifyToken = (token) => {
+  if (!token) return { message: tokenIsRequired, status: 401, fail: true };
+  if (token.length !== 16) return { message: tokenInvalid, status: 401, fail: true };
+  return { fail: false };
+};
 
 const nameAndAgeVerify = (name, age) => {
   if (!name) return { message: nameIsRequired, status: 400, fail: true };
@@ -45,20 +53,21 @@ const talkVerify = (talk) => {
   return { fail: false };
 };
 
-const postTalker = (req, res, next) => {
+const postTalker = async (req, res, next) => {
   const { name, age, talk } = req.body;
-  // const jsonFile = catchJsonFile('talker.json');
+  const { authorization } = req.headers;
 
-  // if (!token) return res.status(401).json({ message: 'Token não encontrado' });
-  // === VALIDAR O TOKEN === //
+  const tokenVal = verifyToken(authorization);
+  if (tokenVal.fail) return res.status(tokenVal.status).json({ message: tokenVal.message });
+
   const nameAndAge = nameAndAgeVerify(name, age);
   if (nameAndAge.fail) return res.status(nameAndAge.status).json({ message: nameAndAge.message });
-
+  
   const talkChk = talkVerify(talk);
   if (talkChk.fail) return res.status(talkChk.status).json({ message: talkChk.message });
 
   try {
-    const newTalker = insertJsonFile(name, age, talk);
+    const newTalker = await insertJsonFile(name, age, talk);
     res.status(201).json(newTalker);
   } catch (err) {
     next(err);

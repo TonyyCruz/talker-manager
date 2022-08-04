@@ -23,7 +23,7 @@ const improvisedId = async () => {
 };
 
 const editeJsonFile = async (name, age, talk, id) => {
-  const newTalkerObj = { name, age, talk, id: Number(id) };
+  const newTalkerObj = { name, age, id: Number(id), talk };
   const fileData = await catchJsonFile(talkerFile);
   const talkerIdx = fileData.findIndex((t) => t.id === Number(id));
   if (talkerIdx < 0) return false;

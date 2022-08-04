@@ -42,7 +42,7 @@ const insertAndEditeTalker = async ({ name, age, talk, id }) => {
   const newFileData = JSON.stringify([...fileData, newTalkerObj], null, 2);
 
   try {
-    fs.writeFile(talkerFile, newFileData);
+    await fs.writeFile(talkerFile, newFileData);
     return newTalkerObj;
   } catch (err) {
     throw new Error(err);

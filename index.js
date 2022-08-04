@@ -32,7 +32,7 @@ app.post('/talker', postTalkerTest, async (req, res, next) => {
   }
 });
 
-app.post('/talker/:id', postTalkerTest, async (req, res, next) => {
+app.put('/talker/:id', postTalkerTest, async (req, res, next) => {
   const { id } = req.params;
   const { name, age, talk } = req.body;
   try {

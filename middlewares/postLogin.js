@@ -14,7 +14,6 @@ const validateEmail = (email) => {
   const extraValidation = email.includes('.com');
   const testeRegex = regexEmail.test(email);
   if (testeRegex && extraValidation) return true;
-  console.log('false');
   return false;
 };
 

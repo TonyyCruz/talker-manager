@@ -4,6 +4,8 @@ const { talkerValidation } = require('./talkerValidation');
 const { tokenValidation } = require('./tokenValidation');
 const { deleteTalker } = require('./deleteTalker');
 const { queryTalker } = require('./queryTalker');
+const { putEditTalker } = require('./putEditTalker');
+const { postAddTalker } = require('./postAddTalker');
 
 module.exports = {
   getTalkers,
@@ -13,4 +15,6 @@ module.exports = {
   tokenValidation,
   deleteTalker,
   queryTalker,
+  putEditTalker,
+  postAddTalker,
 };

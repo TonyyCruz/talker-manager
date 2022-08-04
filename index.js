@@ -1,6 +1,5 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const { insertAndEditeTalker } = require('./services/insert&EditTalker');
 const {
   getTalkers,
   getTalkerId,
@@ -9,6 +8,8 @@ const {
   tokenValidation,
   deleteTalker,
   queryTalker,
+  putEditTalker,
+  postAddTalker,
 } = require('./middlewares');
 
 const app = express();
@@ -32,26 +33,14 @@ app.post('/login', loginVerify);
 
 app.use(tokenValidation);
 
-app.post('/talker', talkerValidation, async (req, res, next) => {
-  const { name, age, talk } = req.body;
-  try {
-    const newTalker = await insertAndEditeTalker({ name, age, talk });
-    res.status(201).json(newTalker);
-  } catch (err) {
-    next(err);
-  }
+app.post('/talker', talkerValidation, postAddTalker, (req, res) => {
+  const { newTalker } = req;
+  res.status(201).json(newTalker);
 });
 
-app.put('/talker/:id', talkerValidation, async (req, res, next) => {
-  const { id } = req.params;
-  const { name, age, talk } = req.body;
-  try {
-    const editedTalker = await insertAndEditeTalker({ name, age, talk, id });
-    if (!editedTalker) return res.status(400).json({ message: 'Id Invalido' });
-    res.status(200).json(editedTalker);
-  } catch (err) {
-    next(err);
-  }
+app.put('/talker/:id', talkerValidation, putEditTalker, (req, res) => {
+  const { editedTalker } = req;
+  res.status(200).json(editedTalker);
 });
 
 app.delete('/talker/:id', deleteTalker, (_req, res) => {

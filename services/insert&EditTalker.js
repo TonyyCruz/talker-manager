@@ -9,7 +9,7 @@ const improvisedId = async () => {
     const savedId = await catchJsonFile(idFile);
     if (savedId.length === 0) {
       const talkers = await catchJsonFile(talkerFile);
-      const lastId = talkers[talkers.length - 1].id;
+      const lastId = talkers.length === 0 ? 0 : talkers[talkers.length - 1].id;
       const id = JSON.stringify({ id: lastId + 1 });
       fs.writeFile(idFile, id);
       return lastId + 1;
@@ -35,7 +35,7 @@ const editeJsonFile = async (name, age, talk, id) => {
 // ==== CASO RECEBA UM ID IRA EDITAR, SE NÃO REFEBER O ID IRA ADICIONAR ==== //
 const insertAndEditeTalker = async ({ name, age, talk, id }) => {
   if (id) return editeJsonFile(name, age, talk, id);
-
+  
   const fileData = await catchJsonFile(talkerFile);
   const newId = await improvisedId();
   const newTalkerObj = { id: newId, name, age, talk };

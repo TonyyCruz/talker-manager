@@ -35,7 +35,7 @@ const verifyWatchedAt = (watchedAt) => {
 };
 
 const verifyRate = (rate) => {
-  if (!rate) return { message: rateIsRequired, status: 400, fail: true };
+  if (rate === undefined) return { message: rateIsRequired, status: 400, fail: true };
   const checkRate = Number.isInteger(rate) && rate > 0 && rate < 6;
   if (!checkRate) return { message: invalidRate, status: 400, fail: true };
   return { fail: false };

@@ -1,4 +1,4 @@
-const insertJsonFile = require('../services/insertJsonFile');
+// const insertJsonFile = require('../services/insertJsonFile');
 
 const regexData = /^([0-2][0-9]|(3)[0-1])(\/)(((0)[0-9])|((1)[0-2]))(\/)\d{4}$/i;
 
@@ -53,7 +53,7 @@ const talkVerify = (talk) => {
   return { fail: false };
 };
 
-const postTalker = async (req, res, next) => {
+const postTalkerTest = async (req, res, next) => {
   const { name, age, talk } = req.body;
   const { authorization } = req.headers;
 
@@ -66,14 +66,9 @@ const postTalker = async (req, res, next) => {
   const talkChk = talkVerify(talk);
   if (talkChk.fail) return res.status(talkChk.status).json({ message: talkChk.message });
 
-  try {
-    const newTalker = await insertJsonFile(name, age, talk);
-    res.status(201).json(newTalker);
-  } catch (err) {
-    next(err);
-  }
+  next();
 };
 
 module.exports = {
-  postTalker,
+  postTalkerTest,
 };
